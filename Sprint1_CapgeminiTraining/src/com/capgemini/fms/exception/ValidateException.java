@@ -8,34 +8,37 @@ public class ValidateException extends Exception {
 	   super();
    }
 
-public static void flightNumberException()throws Exception {
+public static boolean flightNumberException(Boolean b)throws Exception {
 	// TODO Auto-generated method stub
-	System.out.println("Invalid Flight Number");
+	if(b==true)
+		throw new Exception("Invalid Flight Number");
+	else
+		return false;
 	 
 }
 
-public static boolean ModelException(String model)throws Exception {
+public static boolean ModelException(Boolean b)throws Exception {
 	// TODO Auto-generated method stub
-	if(model.length()==0)
+	if(b==true)
 		throw new Exception("Invalid Model Name");
 	else
-		return true;
+		return false;
 	
 }
-public static boolean seatingCapacityException(int seats) throws Exception {
+public static boolean seatingCapacityException(Boolean b) throws Exception {
 	// TODO Auto-generated method stub
-	if(seats<=50 || seats>=300)
+	if(b==true)
 		throw new Exception("Number of seats should be >= fifty and <=300");
 	else
-		return true;
+		return false;
 }
 
-public static boolean CarrierException(String carrier)throws Exception {
+public static boolean CarrierException(Boolean b)throws Exception {
 	// TODO Auto-generated method stub
-	if(carrier.length()==0)
+	if(b==true)
 		throw new Exception("Invalid Carrier Name");
 	else
-		return true; 
+		return false; 
 	// TODO Auto-generated method stub
 	
 }

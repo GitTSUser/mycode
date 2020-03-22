@@ -11,7 +11,8 @@ import com.capgemini.fms.exception.ValidateException;
 import com.capgemini.fms.service.AirportServiceImpl;
 
 public class AirportConsole {
-		AirportServiceImpl as=new AirportServiceImpl();
+		AirportServiceImpl aservice=new AirportServiceImpl();
+		 Airports port=null;
 		
 		public void AirportService(BufferedReader br) throws ValidateException, Exception {
 			int choice=0;
@@ -23,6 +24,7 @@ public class AirportConsole {
 				System.out.println("ENTER YOUR CHOICE:");
 			    choice=Integer.parseInt(br.readLine());
 			     switch(choice) {
+			     
 			     case 1:
 			    	 try {
 			    	 System.out.println("1. DEL");
@@ -33,7 +35,7 @@ public class AirportConsole {
 			    	 String code = br.readLine();
 			    	 if(code.equals("DEL")||code.equals("LKW")||code.equals("BLR")||code.equals("HYD")) {
 			    	 System.out.println("                      ######### AIRPORT DETAILS ##########");
-			    	 Airports port= as.viewAirport(code);
+			    	 port= aservice.viewAirport(code);
 			    	 System.out.println("\tAirportName\tAirportCode\tAirportLocation");
 			    	 System.out.println(port.getAirportName()+"\t\t"+port.getAirportCode()+"\t\t"+port.getAirportLocation()); 
 			    	 System.out.println("==========================================================================================================");
@@ -46,9 +48,10 @@ public class AirportConsole {
 			    		 System.out.println(e);
 			    	 }
 			    	 break;
+			     
 			     case 2:
 			    	 System.out.println("                      ######### AIRPORTS LIST ##########");
-			  		 List<Airports> lis= as.viewAirports();
+			  		 List<Airports> lis= aservice.viewAirports();
 			  		 System.out.println("AirportName\t\t\tAirportCode\t\tAirportLocation");
 			  		 for(int i=0;i<lis.size();i++)
 			  		 {
@@ -57,6 +60,7 @@ public class AirportConsole {
 			  		System.out.println("==========================================================================================================");
 			  		 System.out.println();
 			  		 break;
+			    
 			     case 3:
 			    	 break;
 			    	 default:

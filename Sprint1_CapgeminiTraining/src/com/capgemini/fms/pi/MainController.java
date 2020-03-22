@@ -23,7 +23,6 @@ public class MainController {
 	       int mod=0,choice1 = 0;
 	       System.out.println("Enter User Type(1/2): 1. Admin 2. Customer");
 	       int user=Integer.parseInt(br.readLine());
-	       flightDao.FlightDetails();
 	       while(mod!=3) {
 	        System.out.println("                            #####SELECT MODULE:######");
 	        System.out.println("1.Flights || 2.Airports || 3.Exit");
@@ -99,11 +98,18 @@ public class MainController {
 	      
 //Case 2:To call UpdateFlight
 public void updateFlight() throws Exception {
- boolean flag;
+ boolean flag=false;
  System.out.println("Enter Flight Number to update Flight Details:");
     String s=br.readLine();
     BigInteger number=new BigInteger(s.toString());
-    flag= fservice.updateFlight(number); 
+    List<Flights> lis=viewFlights();
+    for (int i=0;i<lis.size();i++) {
+       if ((lis.get(i).getFlightNumber()).equals(number)) {
+       	 System.out.println("Enter New Details to be Updated:");
+         flight=validateFlight();
+         flag= fservice.updateFlight(number,flight); 
+       }
+    }
      if(flag==true)
        	System.out.println("******New Flight Updated!!********");
      else {
@@ -114,10 +120,12 @@ public void updateFlight() throws Exception {
     }
 //Case 3:To call viewFlight
 public Flights viewFlight() throws IOException {
+
  System.out.println("Enter the flight number to view flight details:");
  String s2=br.readLine();
  BigInteger number = new BigInteger(s2.toString());
- flight= fservice.viewFlight(number);
+// System.out.println(fservice.viewFlights());
+ flight = fservice.viewFlight(number);
  if(flight!=null) {
  System.out.println("                      ######### FLIGHT DETAILS ##########");
  System.out.println("Flight Number\t Flight Model\tCarrier Name\tSeating Capacity");
@@ -151,22 +159,37 @@ public void deleteFlight() throws IOException {
 public Flights validateFlight() throws ValidateException, IOException {
    	Flights ob=null;
     try {
-    	Boolean b=false;
+    	Boolean b=true;
+    	Boolean bool = true;
 	  System.out.println("Enter Flight number:");
 	  String s=br.readLine();
-	  BigInteger number = new BigInteger(s.toString());
-	    b= validateFlightNumber(number);  //ValidateException.flightNumberException(number);  
-	  System.out.println("Enter Flight model:");
-	  String model=br.readLine();
-	     b=   ValidateException.ModelException(model);
+	  BigInteger num = new BigInteger(s.toString());
+	   // b= validateFlightNumber(number); 
+	    if(!(num.toString().length()!=0 )||!(num.intValue()>=111 && num.intValue()<=999)||(num.intValue()<0))
+			bool= ValidateException.flightNumberException(b);
+	    else 
+	    	bool=true;
+		System.out.println("Enter Flight model:");
+	    String model=br.readLine();
+	    if(!(model.length()!=0 )|| (model.charAt(0)>='0' && model.charAt(0)<='9'))
+	     bool=   ValidateException.ModelException(b);
+	    else 
+	    	bool=true;
 	  System.out.println("Enter Carrier name:");
 	  String carrier=br.readLine();
-	      b=  ValidateException.CarrierException(carrier);
+	  if(!(carrier.length()!=0))
+	      bool=  ValidateException.CarrierException(b);
+	  else 
+	    	bool=true;
 	  System.out.println("Enter Seating Capacity:");
 	  int capacity=Integer.parseInt(br.readLine());
-	       b=  ValidateException.seatingCapacityException(capacity);
-	  if(b==true) {
-	      ob=new Flights(number,model,carrier,capacity);}
+	  if(!(capacity>=50 && capacity<=300)|| (capacity<0))
+	       bool=  ValidateException.seatingCapacityException(b);
+	  else 
+	    	bool=true;
+	  if((bool==true)) {
+	      ob=new Flights(num,model,carrier,capacity);
+	   }
     }
     catch(Exception e) {
     	System.out.println(e);
@@ -174,44 +197,6 @@ public Flights validateFlight() throws ValidateException, IOException {
    
 	   return ob;
 }
-//For Testing Class
-  public boolean validateFlightNumber(BigInteger b) throws Exception  {
-	 boolean f=true;
-	 String st;
-	 
-	 if(!(b.toString().length()!=0 || b.intValue()<=111 || b.intValue()>=999||!(b.intValue()<0))) 
-		  ValidateException.flightNumberException();
-	 else
-		 f=false;
-	 return f;
-}
-  public boolean validateModel(String model) {
-	   boolean flag=true;
-	   for(int i=0;i<model.length();i++)
-	   {
-		   if((model.charAt(i)>='0' && model.charAt(i)<='9') && !(model.charAt(i)>='A' && model.charAt(i)<='Z') ||!(model.charAt(i)>='a' && model.charAt(i)<='a'))
-			   flag=false;
-	   }
-	if(model.length()!=0 || flag==true) 
-		 return true;
-	 else
-		 return false;
-}
-  public boolean validateCarrier(String carrier) {
-	if(carrier.length()!=0) 
-		 return true;
-	 else
-		 return false;
-}
-  public boolean validateSeats(int seats) {
-		if(seats>=50 && seats<=300) 
-			 return true;
-		 else
-			 return false;
-	}
-
-
-
 
 public static void main(String[] args) throws Exception {
 	   

@@ -11,6 +11,7 @@ import com.capgemini.fms.exception.ValidateException;
 public class FlightServiceImpl implements IFlightDAO {
 		 List<Flights> flights=new ArrayList<>();
 		 FlightDAOImpl flightDao=new FlightDAOImpl();
+		 
 	   
 	   //Adds Flight object to list
 	   public Flights addFlight(Flights flight)
@@ -22,16 +23,17 @@ public class FlightServiceImpl implements IFlightDAO {
 	      return flight;
 	   }
 	   //Updates the list
-	   public boolean updateFlight(BigInteger flightId) throws ValidateException, IOException 
+	   public boolean updateFlight(BigInteger flightId,Flights flight) throws ValidateException, IOException 
 	   {
-		 boolean flag= flightDao.updateFlight(flightId);
+		   boolean flag=false;
+		  flag= flightDao.updateFlight(flightId, flight);
 		  return flag;
 	   }
 	   //View the flight details for given Flight Number
 	   public Flights viewFlight(BigInteger flightId) 
 	   {
 		  Flights f=null;
-	      f= flightDao.viewFlight(flightId);
+		  f= flightDao.viewFlight(flightId);
 		  return f;  
 	   }
 	   //View list of Flights

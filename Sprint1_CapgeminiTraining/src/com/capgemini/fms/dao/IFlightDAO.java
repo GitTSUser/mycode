@@ -7,7 +7,7 @@ import com.capgemini.fms.exception.ValidateException;
 	//Flight Interface
 	public interface IFlightDAO {
 		 public Flights addFlight(Flights flight);
-		 public boolean updateFlight(BigInteger flightId) throws ValidateException, IOException;
+		 public boolean updateFlight(BigInteger flightId,Flights flight) throws ValidateException, IOException;
 		 public Flights viewFlight(BigInteger flightId);
 		 public List<Flights> viewFlights();
 		 public void deleteFlight(BigInteger flightId);

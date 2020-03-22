@@ -12,13 +12,14 @@ import com.capgemini.fms.pi.MainController;
 public class FlightDAOImpl implements IFlightDAO {
 	        // MainController control=new  MainController();
 			 List<Flights> flights=new ArrayList<>();
-			// FlightDAOImpl flightDao=new FlightDAOImpl();
 			 
-		   public List<Flights> FlightDetails() 
+			 
+		   public FlightDAOImpl()
 		   {
 			 flights.add(new Flights(new BigInteger("101"),"Boeing 123","Air India",250));
-		     flights.add(new Flights(new BigInteger("123"),"AirBus 770","Indigo",200));
-		     return flights;
+		     flights.add(new Flights(new BigInteger("102"),"AirBus 770","Indigo",200));
+		     flights.add(new Flights(new BigInteger("103"),"Boeing 101","Jet Airways",150));
+		     
 		   }
 			//Adds Flight object to list
 		   public Flights addFlight(Flights flight)
@@ -29,22 +30,18 @@ public class FlightDAOImpl implements IFlightDAO {
 			   return flight;
 		   }
 		   //Updates the list
-		   public boolean updateFlight(BigInteger number) throws ValidateException, IOException 
+		   public boolean updateFlight(BigInteger number,Flights flight) throws ValidateException, IOException 
 		   {
-			   Boolean flag=true;
-			  // FlightDetails();
-			   Flights flight=null;
-			   List<Flights> lis=viewFlights();
-			    for (int i=0;i<lis.size();i++) {
-			       if ((lis.get(i).getFlightNumber()).equals(number)) {
-			       	System.out.println("Enter New Details to be Updated:");
-			       	System.out.println("Enter the Model:");
-			       	//	flight=control.validateFlight();
-			         flights.set(i, flight);
-			         flag=true;
-			         break;
-			        }}
-			    return flag;
+			  boolean flag=false;
+			  for(int i=0;i<flights.size();i++) {
+				 if(flights.get(i).getFlightNumber().equals(number)) {
+			      flights.set(i, flight);
+			      flag=true;
+			      break;
+				 }
+			  }
+			 
+			 return flag;
 			}
 		   //View the flight details for given Flight Number
 		   public Flights viewFlight(BigInteger flightId) 
@@ -57,10 +54,6 @@ public class FlightDAOImpl implements IFlightDAO {
 			        	  flag=true;
 			        	   break;
 			           }
-			          else {
-			        	  f=null;
-			        	  break;
-			          }
 			     }
 				 if(flag==false)
 					 System.out.println("Sorry, Flight number does not exist");
@@ -88,7 +81,7 @@ public class FlightDAOImpl implements IFlightDAO {
 		        if(flag==true)
 		        	System.out.println("*****Flight removed sucessfully!!******");
 		        else
-		        	System.out.println("Sorry, No such Flight found!!");
+		        	System.out.println("Sorry, No such Flight exists!!");
 		   }
 		
 }
