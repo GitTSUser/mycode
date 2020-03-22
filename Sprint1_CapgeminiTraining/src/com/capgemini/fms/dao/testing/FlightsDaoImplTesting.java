@@ -13,10 +13,10 @@ public class FlightsDaoImplTesting {
 	 {      String st="";
 	    for(int i=0;i<brr.length;i++) {
 	    	if(brr[i].equals(b))
-			   st= "New Flight Updated";
-			else
-			   st="Sorry, Flight Number does not exists";
-	        break;
+				   st= "New Flight Updated";
+				else
+				   st="Sorry, Flight Number does not exists";
+		        break;
 	    }
 		   return st;	
 	 }
